@@ -1,0 +1,19 @@
+command to test,build,package and start app
+docker-compose up -d
+
+command To list all transaction 
+curl -k --user "test@test.com:test1234" "http://localhost:9092/api/v1/transaction" | json_pp
+
+command To create new transaction 
+curl -k -v  --user "test@test.com:test1234" \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"transactionamount":100,"transactionrefernce":"Test Transaction","idempotencykey":"8e6349ce-42-47b2-90a4-gaea7a53da49","paymentCard":{"cardnumber":"1234567898765432","expirationdate":"2024-10-09T00:00:00.000+00:00","cvc":"123"}}' \
+  http://localhost:9092/api/v1/transaction
+  
+  
+  from resposne  of above curl , take url from  header "Location" and use that to get fetach all detail for newly created transaction 
+  curl -k --user "test@test.com:test1234" "<Location URL>" | json_pp
+  
+  (e.g .. curl -k --user "test@test.com:test1234" "http://localhost:9092/api/v1/transaction/977bacee-9169-444f-9dc6-1e69971a4589" | json_pp )
+  
